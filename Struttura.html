@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meteo Moderno</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <linkcdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="background-animate"></div>
+
+    <div class="weather-card glass">
+        <div class="search-bar">
+            <input type="text" class="city-search" placeholder="Cerca una città..." value="Monte di Procida">
+            <button class="search-btn">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </div>
+
+        <div class="weather-loading hide">
+            <i class="fa-solid fa-spinner fa-spin"></i> Caricamento in corso...
+        </div>
+
+        <div class="weather-data">
+            <div class="weather-main">
+                <h2 class="city">Monte di Procida</h2>
+                <div class="flex-row main-info">
+                    <h1 class="temp">--°C</h1>
+                    <img src="" alt="" class="icon" />
+                </div>
+                <div class="description">--</div>
+            </div>
+
+            <div class="details-grid">
+                <div class="detail-card glass-dark">
+                    <i class="fa-solid fa-water"></i>
+                    <div>
+                        <p>Umidità</p>
+                        <span class="humidity">--%</span>
+                    </div>
+                </div>
+                <div class="detail-card glass-dark">
+                    <i class="fa-solid fa-wind"></i>
+                    <div>
+                        <p>Vento</p>
+                        <span class="wind">-- km/h</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
