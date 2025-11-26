@@ -1,10 +1,8 @@
 :root {
-    --primary-color: #fff;
     --text-dark: #333;
-    --text-light: #eee;
     --glass-bg: rgba(255, 255, 255, 0.25);
     --glass-border: rgba(255, 255, 255, 0.4);
-    --glass-dark-bg: rgba(0, 0, 0, 0.1);
+    --glass-dark-bg: rgba(0, 0, 0, 0.05);
     --shadow-soft: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
 }
 
@@ -20,7 +18,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    overflow: hidden; /* Evita scrollbar per l'animazione di sfondo */
+    overflow: hidden; /* Blocca lo scroll della pagina principale su Desktop */
 }
 
 /* Sfondo animato fluido */
@@ -39,63 +37,60 @@ body {
     100% { background-position: 0% 50%; }
 }
 
-/* --- GLASSMORPHISM CARD --- */
+/* --- GLASS CARD --- */
 .weather-card {
     width: 90%;
     max-width: 450px;
-    padding: 2.5rem;
+    padding: 2rem;
     border-radius: 25px;
     color: var(--text-dark);
     text-align: center;
-    
-    /* Effetto Vetro */
     background: var(--glass-bg);
     box-shadow: var(--shadow-soft);
     backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px); /* Per Safari */
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--glass-border);
-    
     transition: transform 0.3s ease;
-}
-
-.weather-card:hover {
-    transform: translateY(-5px); /* Leggero sollevamento al mouseover */
+    max-height: 90vh;
+    overflow-y: auto; /* Permette scroll interno se lo schermo è basso */
 }
 
 /* --- SEARCH BAR --- */
-.search-bar {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 30px;
-}
+.search-bar { display: flex; gap: 15px; margin-bottom: 20px; }
 
 input.city-search {
-    flex: 1; /* Occupa tutto lo spazio disponibile */
-    padding: 15px 20px;
-    border: none;
-    outline: none;
+    flex: 1;
+    padding: 12px 20px;
+    border: none; outline: none;
     border-radius: 30px;
     background: rgba(255, 255, 255, 0.6);
-    font-size: 1rem;
-    color: var(--text-dark);
-    transition: all 0.3s ease;
+    font-size: 1rem; color: var(--text-dark);
+    transition: 0.3s;
 }
 
-input.city-search:focus {
-    background: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 0 10px rgba(255,255,255,0.5);
+input.city-search:focus { 
+    background: rgba(255, 255, 255, 0.9); 
+    box-shadow: 0 0 10px rgba(255,255,255,0.3); 
 }
 
+/* --- BOTTONE CERCHIO PERFETTO --- */
 button.search-btn {
-    width: 55px;
-    height: 55px;
+    width: 50px;
+    /* Aspect Ratio forza il quadrato perfetto */
+    aspect-ratio: 1 / 1;
     border-radius: 50%;
+    
+    /* Reset padding e linee */
+    padding: 0;
+    line-height: 0;
+    
     border: none;
     background: var(--text-dark);
-    color: var(--primary-color);
-    font-size: 1.2rem;
+    color: white;
     cursor: pointer;
     transition: all 0.3s ease;
+    
+    /* Flexbox per centrare l'icona */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -103,97 +98,92 @@ button.search-btn {
 
 button.search-btn:hover {
     background: #555;
-    transform: rotate(15deg) scale(1.1); /* Piccola animazione giocosa */
+    transform: rotate(10deg) scale(1.1);
 }
 
-/* --- WEATHER DATA Styling --- */
-.weather-loading, .weather-data {
-    /* Animazione fade-in quando appaiono i dati */
-    animation: fadeIn 0.5s ease-in-out;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
+/* --- MAIN INFO --- */
 .hide { display: none; }
+.weather-loading { margin: 20px 0; font-style: italic; }
 
-.city {
-    font-size: 1.8rem;
-    font-weight: 600;
-    margin-bottom: 10px;
-}
+.city { font-size: 1.8rem; font-weight: 600; margin-bottom: 5px; }
+.flex-row { display: flex; align-items: center; justify-content: center; gap: 10px; }
+.temp { font-size: 4rem; font-weight: 700; }
+.icon { width: 80px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
+.description { font-size: 1.1rem; text-transform: capitalize; margin-bottom: 25px; font-weight: 300; }
 
-.flex-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.temp {
-    font-size: 4.5rem;
-    font-weight: 700;
-    line-height: 1;
-}
-
-.icon {
-    width: 90px;
-    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2)); /* Ombra sull'icona PNG */
-}
-
-.description {
-    font-size: 1.2rem;
-    text-transform: capitalize;
-    margin-bottom: 35px;
-    font-weight: 300;
-}
-
-/* --- DETAILS GRID (Umidità/Vento) --- */
-.details-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Due colonne uguali */
-    gap: 20px;
-}
+/* --- DETAILS GRID --- */
+.details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
 
 .detail-card {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    padding: 20px;
-    border-radius: 20px;
-    /* Un effetto vetro leggermente più scuro per contrasto */
+    display: flex; align-items: center; justify-content: center;
+    gap: 10px; padding: 15px; border-radius: 15px;
     background: var(--glass-dark-bg);
     border: 1px solid var(--glass-border);
-    backdrop-filter: blur(5px);
+}
+.detail-card i { font-size: 1.5rem; color: #444; }
+.detail-card p { font-size: 0.8rem; margin: 0; }
+.detail-card span { font-size: 1.1rem; font-weight: 600; }
+
+/* --- HOURLY FORECAST --- */
+.hourly-container {
     text-align: left;
-    transition: transform 0.3s ease;
+    border-top: 1px solid rgba(255,255,255,0.3);
+    padding-top: 15px;
 }
 
-.detail-card:hover {
-    background: rgba(255,255,255,0.3);
-    transform: scale(1.03);
+.hourly-container h3 { font-size: 1rem; margin-bottom: 10px; opacity: 0.8; }
+
+.hourly-scroll {
+    display: flex; gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scrollbar-width: thin; 
+    scrollbar-color: rgba(0,0,0,0.2) transparent;
 }
 
-.detail-card i {
-    font-size: 1.8rem;
-    color: #444;
+/* Custom Scrollbar */
+.hourly-scroll::-webkit-scrollbar { height: 6px; }
+.hourly-scroll::-webkit-scrollbar-track { background: transparent; }
+.hourly-scroll::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 10px; }
+
+.hourly-card {
+    min-width: 70px;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 10px 5px;
+    border-radius: 12px;
+    display: flex; flex-direction: column; align-items: center;
+    border: 1px solid var(--glass-border);
 }
 
-.detail-card p {
-    font-size: 0.9rem;
-    font-weight: 300;
-}
+.hourly-card span { font-size: 0.85rem; font-weight: 600; }
+.hourly-card img { width: 35px; margin: 2px 0; }
 
-.detail-card span {
-    font-size: 1.2rem;
-    font-weight: 600;
-}
 
-/* Adattamento mobile */
-@media (max-width: 480px) {
+/* --- MOBILE RESPONSIVE FIX --- */
+@media (max-width: 600px) {
+    
+    body {
+        /* Sblocca lo scroll su mobile */
+        overflow-y: auto;
+        height: auto;
+        display: block; /* Rimuove il flex centrale rigido che decentra su mobile */
+        padding: 20px 10px;
+    }
+
+    .weather-card {
+        width: 100%;
+        margin: 0 auto; /* Centra orizzontalmente */
+        padding: 1.5rem;
+        border-radius: 20px;
+        max-width: none; 
+    }
+
     .temp { font-size: 3.5rem; }
-    .details-grid { grid-template-columns: 1fr; } /* Una colonna su schermi piccoli */
+    .city { font-size: 1.5rem; }
+
+    .search-bar { gap: 8px; }
+    input.city-search { width: 100%; font-size: 0.9rem; }
+
+    .details-grid { gap: 10px; }
+    .detail-card { padding: 10px; }
 }
